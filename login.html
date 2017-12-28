@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>My Application- Cognito AWS Login</title>
+  <link rel="stylesheet" media="all" href="css/index.css">
+  <link rel="stylesheet" media="all" href="css/Control.css">
+  <link rel="stylesheet" media="all" href="css/Alert.css">
+  <link rel="stylesheet" media="all" href="css/Button.css">
+  <link rel="stylesheet" media="all" href="css/Well.css">
+</head>
+<body>
+
+  <!-- Templates -->
+  <script type="text/html" id="LoginForm">
+    <div class="LoginForm">
+      <div class="title">My Application Login</div>
+      <form class="form">
+        <div class="Control">
+          <label class="Control__label" for="email">Email</label>
+          <input class="Control__input" name="email" type="text" placeholder="Email" />
+        </div>
+        <div class="Control">
+          <label class="Control__label" for="password">Password</label>
+          <input class="Control__input" name="password" type="password" placeholder="Password" />
+        </div>
+        <input class="Control__input" type="submit" value="Log me in !!!" />
+        <a class="Control__link signup" href="#signup">
+          New User.
+        </a>
+        <!-- available inside welcome after logging in also -->
+
+          <a class="Control__link change"  href="#change">
+            Change Password.
+          </a>
+
+        <a class="Control__link forgot"  href="#forgot">
+          Forgot Password.
+        </a>
+      </form>
+    </div>
+  </script>
+  <script type="text/html" id="SignupForm">
+    <div class="SignupForm">
+      <div class="title">Sign Up</div>
+      <form class="form">
+        <div class="Control">
+          <label class="Control__label" for="email">Email</label>
+          <input class="Control__input" name="email" type="text" placeholder="Email" />
+        </div>
+        <div class="Control">
+          <label class="Control__label" for="password">Password</label>
+          <input class="Control__input" name="password" type="password" placeholder="Password" />
+        </div>
+        <div class="Control">
+          <label class="Control__label" for="repeatPassword">
+            Repeat Password
+          </label>
+          <input class="Control__input" name="repeatPassword" type="password" placeholder="Repeat Password" />
+        </div>
+        <input class="Control__input" type="submit" value="Sign me up!" />
+        <a class="Control__link" href="#login">
+          Back to Login !!!.
+        </a>
+      </form>
+    </div>
+  </script>
+  <script type="text/html" id="ChangeForm">
+    <div class="ChangeForm">
+      <div class="title">Change Password</div>
+      <form class="form">
+        <div class="Control">
+          <label class="Control__label" for="email">Email</label>
+          <input class="Control__input" name="email" type="text" placeholder="Email" />
+        </div>
+        <div class="Control">
+          <label class="Control__label" for="password">Current Password</label>
+          <input class="Control__input" name="password" type="password" placeholder="Current Password" />
+        </div>
+        <div class="Control">
+          <label class="Control__label" for="newpassword">New Password</label>
+          <input class="Control__input" name="newpassword" type="password" placeholder="New Password" />
+        </div>
+        <div class="Control">
+          <label class="Control__label" for="repeatPassword">
+            Repeat Password
+          </label>
+          <input class="Control__input" name="repeatpassword" type="password" placeholder="Repeat Password" />
+        </div>
+        <input class="Control__input" type="submit" value="Change Password!" />
+        <a class="Control__link" href="#login">
+          Back to Login !!!.
+        </a>
+      </form>
+    </div>
+  </script>
+  <script type="text/html" id="Alert">
+    <div class="Alert Alert__<%= type %>">
+      <span class="Alert__close"></span>
+      <%= message %>
+    </div>
+  </script>
+  <script type="text/html" id="ConfirmForm">
+    <div class="ConfirmForm">
+      <div class="title">Confirm email</div>
+      <form class="form">
+        <div class="Control">
+          <label class="Control__label" for="code">Authorization code (Please check your email with which you signed up for)</label>
+          <input class="Control__input" name="code" type="text" placeholder="Authorization code" />
+        </div>
+        <input class="Control__input" type="submit" value="Proceed" />
+        <a class="Control__link" href="#">
+          Please, resend the authorization code.
+        </a>
+        <hr />
+        <a class="Control__link" href="#signup">
+          Back to login.
+        </a>
+      </form>
+    </div>
+  </script>
+  <script type="text/html" id="ForgotForm">
+    <div class="ForgotForm">
+      <div class="title">Forgot Password</div>
+      <form class="form">
+        <div class="Control">
+          <label class="Control__label" for="forgotemail">Email</label>
+          <input class="Control__input" name="forgotemail" type="text" placeholder="Email" />
+        </div>
+        <input class="Control__input" type="submit" value="Get Authorization Code" />
+        <div class="subForgotForm" style="display:none">
+          <div class="Control">
+            <label class="Control__label" for="code">Authorization code (Please check your email with which you signed up for)</label>
+            <input class="Control__input" name="code" type="text" placeholder="Authorization code" />
+          </div>
+          <div class="Control">
+            <label class="Control__label" for="newpassword">New Password</label>
+            <input class="Control__input" name="newpassword" type="password" placeholder="New Password" />
+          </div>
+          <div class="Control">
+            <label class="Control__label" for="repeatPassword">
+              Repeat Password
+            </label>
+            <input class="Control__input" name="repeatpassword" type="password" placeholder="Repeat Password" />
+          </div>
+        </div>
+        <hr />
+        <a class="Control__link" href="#signup">
+          Back to login.
+        </a>
+      </form>
+    </div>
+  </script>
+  <script type="text/html" id="Welcome">
+    <a class="Control__link" style="align:right"  href="#change">
+      Change Password.
+    </a>
+    <div class="Well Well__info">
+      <div class="title">Welcome <%= email %></div>
+      <button type="button" class="Button">Logout!</button>
+    </div>
+
+  </script>
+  <!-- Root component -->
+  <div id="root"></div>
+  <!-- Scripts -->
+  <script src="javascript/lib/aws-cognito-sdk.min.js"></script>
+  <script src="javascript/lib/amazon-cognito-identity.min.js"></script>
+  <script src="javascript/config.js"></script>
+  <script src="javascript/EventEmmiter.js"></script>
+  <script src="javascript/utils.js"></script>
+  <script src="javascript/Cognito.js"></script>
+  <script src="javascript/LoginForm.js"></script>
+  <script src="javascript/ConfirmForm.js"></script>
+  <script src="javascript/SignupForm.js"></script>
+  <script src="javascript/ChangeForm.js"></script>
+  <script src="javascript/ForgotForm.js"></script>
+  <script src="javascript/Welcome.js"></script>
+  <script src="javascript/index.js"></script>
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+</body>
+</html>
